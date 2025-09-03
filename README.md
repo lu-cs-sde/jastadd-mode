@@ -5,6 +5,7 @@ commonly placed in `.jrag`/`.jadd` files.
 
 ## Features
 - Syntax highlighting
+- Go-to-definition with xref
 - Otherwise very bare-bones, little more than `java-mode` with extra keywords
 
 ## Related work
