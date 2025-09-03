@@ -1,7 +1,29 @@
-;; Copyright (C) 2017,24 Christoph Reichenbach (creichen@gmail.com)
-;; Copyright (C) 2025 Erik Präntare (erik.prantare@gmail.com)
+;;; jastadd-mode.el --- Major mode for JastAdd's jrag/jadd files  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2017, 2024 Christoph Reichenbach (creichen@gmail.com)
+;; Copyright (C) 2025  Erik Präntare (erik.prantare@gmail.com)
+
+;; Author: Christoph Reichenbach, Erik Präntare
+;; Keywords: languages
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
 ;;
-;; Major mode for JastAdd's jrag/jadd files
+
+;;; Code:
 
 (require 'project)
 (require 'xref)
@@ -9,8 +31,7 @@
 
 (defun jastadd--mode-xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
-  (let ((project-root (project-root (project-current)))
-        (case-fold-search nil))
+  (let ((case-fold-search nil))
     (xref-matches-in-files
      ;; xref-matches-in-files does not handle shy groups generated
      ;; by "or" in rx syntax (this is a bug). [2025-09-03]
@@ -45,3 +66,4 @@
 (add-to-list 'auto-mode-alist '("\\.jadd\\'" . jastadd-mode))
 
 (provide 'jastadd-mode)
+;;; jastadd-mode.el ends here
