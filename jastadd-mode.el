@@ -27,7 +27,7 @@
 
 (require 'xref)
 
-(defun jastadd--mode-xref-definitions (identifier)
+(defun jastadd-mode--xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
   (let ((case-fold-search nil))
     (xref-matches-in-files
@@ -40,9 +40,9 @@
 
 (cl-defmethod xref-backend-definitions ((_backend (eql 'jastadd)) identifier)
   "Get definitions of IDENTIFIER."
-  (jastadd--mode-xref-definitions identifier))
+  (jastadd-mode--xref-definitions identifier))
 
-(defun jastadd--mode-setup-xref ()
+(defun jastadd-mode--setup-xref ()
   "Set up xref to use jastadd as a backend."
   (add-hook 'xref-backend-functions (lambda () 'jastadd) nil t))
 
@@ -55,7 +55,7 @@
 (define-derived-mode jastadd-mode
   java-mode "JastAdd"
   "Major mode for JastAdd jrag/jadd attribute grammar specifications."
-  (jastadd--mode-setup-xref))
+  (jastadd-mode--setup-xref))
 
 (font-lock-add-keywords 'jastadd-mode
   (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
