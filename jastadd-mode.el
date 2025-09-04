@@ -25,9 +25,7 @@
 
 ;;; Code:
 
-(require 'project)
 (require 'xref)
-(require 'cl-generic)
 
 (defun jastadd--mode-xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
@@ -60,7 +58,8 @@
   (jastadd--mode-setup-xref))
 
 (font-lock-add-keywords 'jastadd-mode
-  '(("\\<\\(aspect\\|syn\\|inh\\|coll\\|eq\\|refine\\|rewrite\\|when\\|to\\|lazy\\|with\\|root\\)\\>" . font-lock-keyword-face)))
+  (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
+              font-lock-keyword-face)))
 
 (add-to-list 'auto-mode-alist '("\\.jrag\\'" . jastadd-mode))
 (add-to-list 'auto-mode-alist '("\\.jadd\\'" . jastadd-mode))
