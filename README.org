@@ -1,0 +1,26 @@
+#+title: jastadd-mode
+
+~jastadd-mode~ is a (bare-bones) Emacs major mode for editing [[https://jastadd.org][JastAdd]]
+attribute grammar specifications, commonly placed in ~.jrag~ / ~.jadd~
+files.
+
+* Features
+- Syntax highlighting
+- Go-to-definition with xref
+- Otherwise very bare-bones, little more than ~java-mode~ with extra keywords
+
+* Installation
+Add the following to your configuration:
+
+#+begin_src elisp
+  (use-package jastadd-mode
+    :vc (:url "https://github.com/lu-cs-sde/jastadd-mode"
+              :branch "main"
+              :rev :newest))
+#+end_src
+
+* Related work
+These references
+
+- [[https://github.com/rudi/jastadd-ast-mode/tree/master][JastAdd AST mode]] (also [[https://melpa.org/#/jastadd-ast-mode][in MELPA]])
+- [[https://github.com/ivarref/jastadd-tags][JastAdd tags support for vi(m) & Emacs]] (haven't tested)
