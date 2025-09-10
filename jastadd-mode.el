@@ -27,14 +27,18 @@
 
 (require 'xref)
 
+(defvar jastadd--declaration-keyword-regexp
+  (regexp-opt '("coll" "inh" "eq" "syn") 'word))
+
 (defun jastadd-mode--xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
   (let ((case-fold-search nil))
     (xref-matches-in-files
-     ;; xref-matches-in-files does not handle shy groups generated
-     ;; by "or" in rx syntax (this is a bug). [2025-09-03]
-     ;; (rx line-start (* white) (or "coll" "inh" "eq" "syn") (* any) (literal identifier) "(")
-     (concat "^[[:space:]]*\\(coll\\|inh\\|eq\\|syn\\).*" (regexp-quote identifier) "(")
+     (concat "^[[:space:]]*"
+             jastadd--declaration-keyword-regexp
+             ".*"
+             (regexp-quote identifier)
+             "(")
      (seq-filter (lambda (file) (equal (file-name-extension file) "jrag"))
                  (project-files (project-current))))))
 
@@ -57,9 +61,10 @@
   "Major mode for JastAdd jrag/jadd attribute grammar specifications."
   (jastadd-mode--setup-xref))
 
-(font-lock-add-keywords 'jastadd-mode
-  (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
-              font-lock-keyword-face)))
+  (font-lock-add-keywords
+   'jastadd-mode
+   (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
+               font-lock-keyword-face))))
 
 (add-to-list 'auto-mode-alist '("\\.jrag\\'" . jastadd-mode))
 (add-to-list 'auto-mode-alist '("\\.jadd\\'" . jastadd-mode))
