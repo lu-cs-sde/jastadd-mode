@@ -56,11 +56,27 @@
   (let ((xref-backend-functions (list (lambda () 'jastadd))))
     (xref-find-definitions (symbol-name (symbol-at-point)))))
 
+(defun jastadd--outline-search-function (&optional bound move backward looking-at)
+  ;; Assume everything is correctly indented, assume one indentation
+  ;; level indicates heading
+  (let (regexp)
+    (save-excursion
+      (goto-char (point-min))
+      (search-forward "aspect")
+      (re-search-forward (rx bol (group-n 1 (+ white))))
+      (setq regexp (rx bol
+                       (literal (match-string 1))
+                       alpha)))
+    (cond
+     (looking-at (looking-at regexp))
+     (backward (re-search-backward regexp bound (and move 'move)))
+     (t (re-search-forward regexp bound (and move 'move))))))
+
 (define-derived-mode jastadd-mode
   java-mode "JastAdd"
   "Major mode for JastAdd jrag/jadd attribute grammar specifications."
-  (jastadd-mode--setup-xref))
-
+  (jastadd-mode--setup-xref)
+  (setq-local outline-search-function #'jastadd--outline-search-function)
   (font-lock-add-keywords
    'jastadd-mode
    (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
