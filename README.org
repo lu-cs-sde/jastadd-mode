@@ -1,8 +1,7 @@
 #+title: jastadd-mode
 
-~jastadd-mode~ is a (bare-bones) Emacs major mode for editing [[https://jastadd.org][JastAdd]]
-attribute grammar specifications, commonly placed in ~.jrag~ / ~.jadd~
-files.
+~jastadd-mode~ is an Emacs major mode for editing [[https://jastadd.org][JastAdd]] attribute
+grammar specifications, commonly placed in ~.jrag~ / ~.jadd~ files.
 
 * Features
 - Syntax highlighting
