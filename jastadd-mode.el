@@ -79,7 +79,7 @@
   (setq-local outline-search-function #'jastadd--outline-search-function)
   (font-lock-add-keywords
    'jastadd-mode
-   (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root") 'words)
+   (list (cons (regexp-opt '("aspect" "syn" "inh" "coll" "eq" "refine" "rewrite" "when" "to" "lazy" "with" "root" "nta") 'words)
                font-lock-keyword-face))))
 
 (add-to-list 'auto-mode-alist '("\\.jrag\\'" . jastadd-mode))
