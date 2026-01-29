@@ -1,7 +1,7 @@
 ;;; jastadd-mode.el --- Major mode for JastAdd's jrag/jadd files  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017, 2024 Christoph Reichenbach (creichen@gmail.com)
-;; Copyright (C) 2025  Erik Präntare (erik.prantare@gmail.com)
+;; Copyright (C) 2025, 2026  Erik Präntare (erik.prantare@gmail.com)
 
 ;; Author: Christoph Reichenbach, Erik Präntare
 ;; Keywords: languages
@@ -58,15 +58,17 @@
 
 (defun jastadd--outline-search-function (&optional bound move backward looking-at)
   ;; Assume everything is correctly indented, assume one indentation
-  ;; level indicates heading
+  ;; level indicates heading.
   (let (regexp)
     (save-excursion
       (goto-char (point-min))
       (search-forward "aspect")
       (re-search-forward (rx bol (group-n 1 (+ white))))
       (setq regexp (rx bol
-                       (literal (match-string 1))
-                       alpha)))
+                       (or (seq (literal (match-string 1))
+                                alpha)
+                           ;; Do not hide aspect clause headers.
+                           "aspect"))))
     (cond
      (looking-at (looking-at regexp))
      (backward (re-search-backward regexp bound (and move 'move)))
