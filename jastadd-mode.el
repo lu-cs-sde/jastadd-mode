@@ -62,13 +62,17 @@
   (let (regexp)
     (save-excursion
       (goto-char (point-min))
-      (search-forward "aspect")
+      (re-search-forward (rx bol "aspect"))
       (re-search-forward (rx bol (group-n 1 (+ white))))
       (setq regexp (rx bol
-                       (or (seq (literal (match-string 1))
-                                alpha)
-                           ;; Do not hide aspect clause headers.
-                           "aspect"))))
+                       (or
+                        ;; Show rows with same indentation as first
+                        ;; line after first "aspect" declaration,
+                        ;; except if it is a trailing }.
+                        (seq (literal (match-string 1))
+                             (not (or white ?})))
+                        ;; Do not hide aspect clause headers.
+                        "aspect"))))
     (cond
      (looking-at (looking-at regexp))
      (backward (re-search-backward regexp bound (and move 'move)))
