@@ -28,7 +28,9 @@
 (require 'xref)
 
 (defvar jastadd--declaration-keyword-regexp
-  (regexp-opt '("coll" "inh" "eq" "syn") 'word))
+  ;; We use ERE because this will be passed to grep.
+  "\\(coll\\|inh\\|eq\\|syn\\)"
+  "ERE regex matching declaration keywords.")
 
 (defun jastadd-mode--xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
@@ -36,7 +38,7 @@
     (xref-matches-in-files
      (concat "^[[:space:]]*"
              jastadd--declaration-keyword-regexp
-             ".*"
+             ".*[^[:alpha:]]"
              (regexp-quote identifier)
              "(")
      (seq-filter (lambda (file) (equal (file-name-extension file) "jrag"))
