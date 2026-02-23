@@ -32,8 +32,8 @@
   "\\(coll\\|inh\\|eq\\|syn\\)"
   "ERE regex matching declaration keywords.")
 
-(defun jastadd-mode--xref-definitions (identifier)
-  "Get definitions of IDENTIFIER."
+(defun xref-definitions-attributes (identifier files)
+  "Return xref definitions of attribute IDENTIFIER in .jrag files."
   (let ((case-fold-search nil))
     (xref-matches-in-files
      (concat "^[[:space:]]*"
@@ -42,7 +42,26 @@
              (regexp-quote identifier)
              "(")
      (seq-filter (lambda (file) (equal (file-name-extension file) "jrag"))
-                 (project-files (project-current))))))
+                 files))))
+
+(defun xref-definitions-astNode (identifier files)
+  "Return xref definitions of AST node IDENTIFIER in .ast files."
+  (let ((case-fold-search nil))
+    (xref-matches-in-files
+     (concat "^[[:space:]]*"
+	     "\\(abstract[[:space:]]*\\)?"
+             (regexp-quote identifier)
+             "\\b")
+     (seq-filter (lambda (file) (equal (file-name-extension file) "ast"))
+		 files))))
+
+(defun jastadd-mode--xref-definitions (identifier)
+  "Get definitions of IDENTIFIER."
+  (let* ((project (project-current))
+         (files (project-files project)))
+    (append
+     (xref-definitions-attributes identifier files)
+     (xref-definitions-astNode identifier files))))
 
 (cl-defmethod xref-backend-definitions ((_backend (eql 'jastadd)) identifier)
   "Get definitions of IDENTIFIER."
