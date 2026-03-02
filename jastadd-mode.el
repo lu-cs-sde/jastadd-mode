@@ -32,8 +32,8 @@
   "\\(coll\\|inh\\|eq\\|syn\\)"
   "ERE regex matching declaration keywords.")
 
-(defun xref-definitions-attributes (identifier files)
-  "Return xref definitions of attribute IDENTIFIER in .jrag files."
+(defun jastadd-mode--xref-definitions-attributes (identifier files)
+  "Return xref definitions of attribute IDENTIFIER in .jrag FILES."
   (let ((case-fold-search nil))
     (xref-matches-in-files
      (concat "^[[:space:]]*"
@@ -44,8 +44,8 @@
      (seq-filter (lambda (file) (equal (file-name-extension file) "jrag"))
                  files))))
 
-(defun xref-definitions-astNode (identifier files)
-  "Return xref definitions of AST node IDENTIFIER in .ast files."
+(defun jastadd-mode--xref-definitions-ast-node (identifier files)
+  "Return xref definitions of AST node IDENTIFIER in .ast FILES."
   (let ((case-fold-search nil))
     (xref-matches-in-files
      (concat "^[[:space:]]*"
