@@ -49,7 +49,7 @@
   (let ((case-fold-search nil))
     (xref-matches-in-files
      (concat "^[[:space:]]*"
-	     "\\(abstract[[:space:]]*\\)?"
+             "\\(abstract[[:space:]]*\\)?"
              (regexp-quote identifier)
              "\\b")
      (seq-filter (lambda (file) (equal (file-name-extension file) "ast"))
