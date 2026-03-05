@@ -53,7 +53,7 @@
              (regexp-quote identifier)
              "\\b")
      (seq-filter (lambda (file) (equal (file-name-extension file) "ast"))
-		 files))))
+                 files))))
 
 (defun jastadd-mode--xref-definitions (identifier)
   "Get definitions of IDENTIFIER."
